@@ -1,5 +1,5 @@
 
-const db = require('../models/db_conf.js');
+/*const db = require('../models/db_conf.js');
 
 module.exports.save = (data) => {
     console.log(data);
@@ -28,4 +28,4 @@ module.exports.enableAccount = (id) => {
 module.exports.disableAccount = (id) => {
     const stmt = db.prepare('UPDATE users SET active=0 WHERE id_user = ?');
     return stmt.run(id);
-}
+}*/

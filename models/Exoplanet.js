@@ -1,4 +1,4 @@
-const db = require('../models/db_conf');
+/*const db = require('../models/db_conf');
 
 
 module.exports.list = () => {
@@ -47,3 +47,4 @@ module.exports.searchByHclass = (hclass) => {
 module.exports.searchByYear = (year) => {
     return db.prepare('SELECT * FROM EXOPLANETS WHERE discovery_year = ?').all(year);
 }
+    */
