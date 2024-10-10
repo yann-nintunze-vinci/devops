@@ -46,9 +46,7 @@ router.post('/login', (req, res, next) => {
         }
     }
     else {
-        console.log("bad user");
-        req.session.errors = "Utilisateur inconnu";
-        res.redirect('/users');
+        handleBadUser(req, res);
     }
 });
 
@@ -94,6 +92,12 @@ router.post('/add', (req, res, next) => {
 });
 
 module.exports = router;
+
+function handleBadUser(req, res) {
+    console.log("bad user");
+    req.session.errors = "Utilisateur inconnu";
+    res.redirect('/users');
+}
 
 function handleIncorrectPassword(req, res) {
     console.log("bad password");
