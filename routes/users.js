@@ -57,23 +57,26 @@ router.post('/add', (req, res, next) => {
     if (!validator.isStrongPassword(req.body.userPassword, { minLength: 2, minLowercase: 0, minUppercase: 0, minNumbers: 0, minSymbols: 0, returnScore: false })) errors.push("Le mot de passe n'et pas assez fort : 2 caractères minimum, ... !");
     if (req.body.userPassword != req.body.userPasswordConfirmation) errors.push("Les mot de passes ne correspondent pas");
     if (User.find(req.body.userEmail)) errors.push("Email/Utilisateur déjà présent en DB");
-    if (errors.length == 0) {
-        User.save({
-            name: req.body.userName,
-            firstname: req.body.userFirstname,
-            email: req.body.userEmail,
-            password: bcrypt.hashSync(req.body.userPassword, saltRounds)
-        });
-        res.redirect('/users');
-    }
-    else {
-        req.session.errors = errors;
-        res.redirect('/users/register');
-    }
+    errors.length == 0 ? handleNoErrors(req, res) : handleErrors(req, errors, res);
 });
 
 module.exports = router;
 
+
+function handleErrors(req, errors, res) {
+    req.session.errors = errors;
+    res.redirect('/users/register');
+}
+
+function handleNoErrors(req, res) {
+    User.save({
+        name: req.body.userName,
+        firstname: req.body.userFirstname,
+        email: req.body.userEmail,
+        password: bcrypt.hashSync(req.body.userPassword, saltRounds)
+    });
+    res.redirect('/users');
+}
 
 function handleUserNotFound(userFound, req, res) {
 
